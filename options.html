@@ -1,18 +1,186 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="buttonDiv">
+
+<head>
+  <meta charset="utf-8">
+  <title>Wikipedia Citation Generator - Options</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+    }
+
+    .section h2 {
+      color: #555;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .option-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .save-btn {
+      background: #0073aa;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .save-btn:hover {
+      background: #005a87;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .description {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .info-box {
+      background: #e9ecef;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      color: #495057;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Wikipedia Citation Generator Options</h1>
+
+    <div class="section">
+      <h2>Citation Preferences</h2>
+
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="includeAccessDate" checked>
+          Always include access date
+        </label>
+        <div class="description">Include the date you accessed the webpage in the citation</div>
+      </div>
+
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="autoDetectNews" checked>
+          Auto-detect news articles
+        </label>
+        <div class="description">Automatically use "cite news" template for news websites</div>
+      </div>
+
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="includeLanguage" checked>
+          Include language parameter for non-English content
+        </label>
+        <div class="description">Add language parameter when content is not in English</div>
+      </div>
     </div>
-  </body>
+
+    <div class="section">
+      <h2>Default Author</h2>
+      <div class="option-group">
+        <label for="defaultAuthor">Fallback author name (optional):</label>
+        <input type="text" id="defaultAuthor" placeholder="Enter default author name">
+        <div class="description">Use this author name when no author is detected on the page</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Template Format</h2>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="multilineFormat" checked>
+          Use multi-line format
+        </label>
+        <div class="description">Format template with each parameter on a new line (recommended)</div>
+      </div>
+    </div>
+
+    <button class="save-btn" id="saveBtn">Save Options</button>
+
+    <div class="status" id="statusDiv">
+      Options saved successfully!
+    </div>
+
+    <div class="info-box">
+      <h3>How to Use</h3>
+      <p><strong>Method 1:</strong> Click the extension icon in the toolbar and press "Generate Citation Template"</p>
+      <p><strong>Method 2:</strong> Right-click on any webpage and select "Generate Wikipedia Citation"</p>
+      <p>The extension will extract metadata from the page and generate a properly formatted Wikipedia citation template
+        that you can copy and paste into Wikipedia articles.</p>
+    </div>
+  </div>
+
   <script src="options.js"></script>
+</body>
+
 </html>

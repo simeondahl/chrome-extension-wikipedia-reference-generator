@@ -1,20 +1,50 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Wikipedia Citation Generator - Options Script
 
-'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  // Load saved options
+  loadOptions();
 
-const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1'];
-function constructOptions(kButtonColors) {
-  for (let item of kButtonColors) {
-    let button = document.createElement('button');
-    button.style.backgroundColor = item;
-    button.addEventListener('click', function() {
-      chrome.storage.sync.set({color: item}, function() {
-        console.log('color is ' + item);
-      })
-    });
-    page.appendChild(button);
-  }
+  // Save button event listener
+  document.getElementById('saveBtn').addEventListener('click', saveOptions);
+});
+
+function loadOptions() {
+  // Set default values
+  const defaults = {
+    includeAccessDate: true,
+    autoDetectNews: true,
+    includeLanguage: true,
+    defaultAuthor: '',
+    multilineFormat: true
+  };
+
+  chrome.storage.sync.get(defaults, function (items) {
+    document.getElementById('includeAccessDate').checked = items.includeAccessDate;
+    document.getElementById('autoDetectNews').checked = items.autoDetectNews;
+    document.getElementById('includeLanguage').checked = items.includeLanguage;
+    document.getElementById('defaultAuthor').value = items.defaultAuthor;
+    document.getElementById('multilineFormat').checked = items.multilineFormat;
+  });
 }
-constructOptions(kButtonColors);
+
+function saveOptions() {
+  const options = {
+    includeAccessDate: document.getElementById('includeAccessDate').checked,
+    autoDetectNews: document.getElementById('autoDetectNews').checked,
+    includeLanguage: document.getElementById('includeLanguage').checked,
+    defaultAuthor: document.getElementById('defaultAuthor').value.trim(),
+    multilineFormat: document.getElementById('multilineFormat').checked
+  };
+
+  chrome.storage.sync.set(options, function () {
+    // Show save confirmation
+    const statusDiv = document.getElementById('statusDiv');
+    statusDiv.style.display = 'block';
+    statusDiv.classList.add('success');
+
+    setTimeout(function () {
+      statusDiv.style.display = 'none';
+      statusDiv.classList.remove('success');
+    }, 3000);
+  });
+}
